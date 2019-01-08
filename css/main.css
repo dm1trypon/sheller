@@ -1,0 +1,122 @@
+body {
+    background: MidnightBlue;
+}
+
+.div-main-class {
+    position: relative;
+    margin: 0 auto;
+    top: 100px;
+    width: 600px;
+    height: auto;
+    border-style: solid;
+	border-color: #1E90FF;
+	border-width: thin;
+}
+
+.div-host-class {
+    background: DarkOliveGreen;
+    width: 600px;
+    height: 25px;
+}
+
+.div-host-class div {
+    margin-left: 10px;
+    height: 20px;
+    display: inline-block;
+}
+
+.div-shell-class {
+    background: black;
+    width: 600px;
+    height: 700px;
+    overflow-y: scroll;
+}
+
+.div-shell-line-class {
+    background: black;
+    width: auto;
+    height: auto;
+    overflow: hidden;
+}
+
+.div-shell-line-class div{
+    height: 20px;
+    display: inline-block;
+}
+
+.div-host-class span{
+    color: red;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.div-shell-line-class input {
+    margin-left: 5px;
+    background: black;
+    color: greenyellow;
+    border: 0px;
+    font-family: 'Courier New', Courier, monospace;
+    outline: none;
+}
+
+.span-host {
+    color: violet;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.span-result {
+    white-space: pre-line;
+    color: yellow;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.input-class {
+    background: DarkSlateGrey;
+    color: greenyellow;
+    font-size: 16;
+    border: 0px;
+    width: 200px;
+    height: 25px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+/* .button-class {
+    background: red;
+    color: greenyellow;
+    font-family: 'Courier New', Courier, monospace;
+    height: 25px;
+} */
+
+a.button-class {
+    display: inline-block;
+    font-size: 14px;
+    height: 17px;
+    font-family: 'Courier New', Courier, monospace;
+    color: rgb(205,216,228);
+    text-decoration: none;
+    padding: 3.5px;
+    outline: none;
+    border-right: 1px solid rgba(13,20,27,.5);
+    border-top: 1px solid rgba(270,278,287,.01);
+    background-color: rgb(64,73,82);
+    background-image:
+     radial-gradient(1px 60% at 0% 50%, rgba(255,255,255,.3), transparent),
+     radial-gradient(1px 60% at 100% 50%, rgba(255,255,255,.3), transparent),
+     linear-gradient(rgb(64,73,82), rgb(72,81,90));
+  }
+  a.button-class:hover {
+    background-image:
+     radial-gradient(1px 60% at 0% 50%, rgba(255,255,255,.3), transparent),
+     radial-gradient(1px 60% at 100% 50%, rgba(255,255,255,.3), transparent),
+     linear-gradient(rgb(51,60,67), rgb(58,65,72));
+  }
+  a.button-class:focus {
+    color: rgb(245,247,250);
+    border-top: 1px solid rgb(67,111,136);
+    background-image:
+     linear-gradient(rgb(46,95,122), rgb(36,68,92));
+  }
+  a.button-class:focus:hover {
+    border-top: 1px solid rgb(49,87,107);
+    background-image:
+     linear-gradient(rgb(33,77,98), rgb(29,57,77));
+  }
