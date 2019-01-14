@@ -1,5 +1,9 @@
 body {
-    background: MidnightBlue;
+    background: rgb(45, 45, 45);
+}
+
+button {
+    font-family: 'Courier New', Courier, monospace;
 }
 
 .div-main-class {
@@ -9,12 +13,108 @@ body {
     width: 600px;
     height: auto;
     border-style: solid;
-	border-color: #1E90FF;
-	border-width: thin;
+	border-color: rgb(165, 190, 214);
+    border-width: thin;
+}
+
+.div-server-class {
+    position: relative;
+    margin: 0 auto;
+    top: 100px;
+    width: 600px;
+    height: 25px;
+    background: darkblue;
+}
+
+.div-changer-class {
+    position: absolute;
+    right: 50px;
+    top: 150px;
+    width: 300px;
+    height: auto;
+    border-style: solid;
+	border-color: rgb(165, 190, 214);
+    border-width: thin;
+    background: rgb(221, 221, 221);
+}
+
+.div-logger-class {
+    position: absolute;
+    top: 150px;
+    width: 400px;
+    height: 400px;
+    background: black;
+    border-style: solid;
+	border-color: rgb(165, 190, 214);
+    border-width: thin;
+    overflow-y: scroll;
+}
+
+.div-logger-class span {
+    color: red;
+    font-size: 12px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.div-changer-class div {
+    position: relative;
+    margin: 0 auto;
+    width: 200px;
+}
+
+.div-changer-class button {
+    margin-bottom: 25px;
+}
+
+.div-changer-class span {
+    color: rgb(45, 45, 45);
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.div-changer-class h3 {
+    text-align: center;
+    color: rgb(45, 45, 45);
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.div-changer-class input {
+    background: DarkSlateGrey;
+    color: greenyellow;
+    font-size: 16;
+    border: 0px;
+    width: 200px;
+    height: 25px;
+    font-family: 'Courier New', Courier, monospace;
+    width: 100%;
+}
+
+.div-status-result-class {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    background: black;
+    border-style: solid;
+	border-color: rgb(165, 190, 214);
+    border-width: thin;
+}
+
+.div-status-result-class span {
+    color: greenyellow;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.div-server-class input {
+    background: DarkSlateGrey;
+    color: greenyellow;
+    font-size: 16;
+    border: 0px;
+    width: 200px;
+    height: 25px;
+    font-family: 'Courier New', Courier, monospace;
 }
 
 .div-host-class {
-    background: DarkOliveGreen;
+    background: rgb(221, 221, 221);
     width: 600px;
     height: 25px;
 }
@@ -23,6 +123,16 @@ body {
     margin-left: 10px;
     height: 20px;
     display: inline-block;
+}
+
+.div-host-class input {
+    background: DarkSlateGrey;
+    color: greenyellow;
+    font-size: 16;
+    border: 0px;
+    width: 135px;
+    height: 25px;
+    font-family: 'Courier New', Courier, monospace;
 }
 
 .div-shell-class {
@@ -45,7 +155,7 @@ body {
 }
 
 .div-host-class span{
-    color: red;
+    color: rgb(45, 45, 45);
     font-family: 'Courier New', Courier, monospace;
 }
 
@@ -79,12 +189,13 @@ body {
     font-family: 'Courier New', Courier, monospace;
 }
 
-/* .button-class {
-    background: red;
-    color: greenyellow;
-    font-family: 'Courier New', Courier, monospace;
-    height: 25px;
-} */
+.div-buttons-class {
+    position: relative;
+    margin: 0 auto;
+    top: 50px;
+    display: table;
+    background: rgb(221, 221, 221);;
+}
 
 a.button-class {
     display: inline-block;

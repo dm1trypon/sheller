@@ -1,44 +1,112 @@
-var id = 0;
-var client;
-var historyBash = [""];
+let id = 0;
+let client;
+let historyBash = [""];
+let remoteHost;
+
+const REBOOT = "reboot";
+const XORG = "xorg";
+const KIND = "kind";
+const INFO = "info";
+const HALL_XORG = "hall_xorg";
+const HALL_KIND = "hall_kind";
+const HALL_REBOOT = "hall_reboot";
+const HALL_PING = "hall_ping";
+const PING = "ping";
 
 function main() {
-    let items = ["<input id = \"input-host\" class = \"input-class\"></input>",
-                "<a href=\"#\" id = \"button-host\" class = \"button-class\">Connect</a>"];
-
-    console.log("Before addElements...Item is " + $("#div-host"));
-    addElements($("#div-host"), items);
+    toConnect();
 }
 
-function addElements(idItem, items) {
-    console.log("Array items: " + items);
-    for (let i = 0; i < items.length; i++) {
-        console.log("Add item: " + items[i]);
-        idItem.append(items[i]);
+function itemsCreater() {
+    $("#div-connect-server").remove();
+    addMain();
+    onConnectToHost();
+    addButtons();
+    addLogger();
+}
+
+function onStateHost(ip, status) {
+    if (status == "0") {
+        console.log("Host " + ip + " is offline.");
+        addLogLine("Host " + ip + " is offline.");
+        
+        if (!document.getElementById("button-host") && !document.getElementById("button-disconnect-host")) {
+            $(document.getElementById("div-host")).append("<a href = \"#\" id = \"button-host\" class = \"button-class\">Connect</a>");
+            onConnectToHost();
+            document.getElementById("input-host").disabled = false;
+        }
+           
+        return;
     }
-    toConnect(document.getElementById('button-host'));
+
+    console.log("Host " + ip + " is online.");
+    addLogLine("Host " + ip + " is online.");    
+
+    if (!document.getElementById("button-host") && !document.getElementById("button-disconnect-host")) {
+        $(document.getElementById("div-host")).append("<a href = \"#\" id = \"button-disconnect-host\" class = \"button-class\">Disconnect</a>");
+        onDisconnectHost();
+        addLine();
+    }
 }
 
-function toConnect(item) {
-    item.onclick = function() {
+function onDisconnectHost() {
+    let button = document.getElementById("button-disconnect-host");
+    button.onclick = function() {
+        document.getElementById("button-disconnect-host").remove();
+
+        $(document.getElementById("div-host")).append("<a href = \"#\" id = \"button-host\" class = \"button-class\">Connect</a>");
+        onConnectToHost();
+
+        document.getElementById("input-host").disabled = false;
+        $("#" + document.getElementById("div-shell").id + ">").remove();
+    }
+}
+
+function onConnectToHost() {
+    let button = document.getElementById("button-host");
+    button.onclick = function() {
+        checkHost(document.getElementById("input-host").value);
+        document.getElementById("button-host").remove();
+        document.getElementById("input-host").disabled = true;
+    }
+}
+
+function checkHost(ipHost) {
+    let arrData = [];
+    arrData[0] = "ping";
+    arrData[1] = ipHost;
+    client.sender(toJson(arrData));
+}
+
+function toConnect() {
+    document.getElementById("button-server").onclick = function() {
         console.log("Click connect button.");
-        let ip_ws = document.getElementById("input-host").value;
-        client = new ClientWS(ip_ws);
+        let ip = document.getElementById("input-server").value;
+        client = new ClientWS(ip);
     }
 }
 
-function toSend() {
-    let input = document.getElementById(id + "-input");
-    keyEvent(input);
+function toSend(type, data) {
+    console.log(data);
+    if (type == "shell")
+    {
+        keyEvent(data);
+        return;
+    }
+    console.log("Send data to client: " + data);
+    client.sender(data);
 }
 
 function keyEvent(input) {
     let idBash = historyBash.length - 1;
+    console.log(idBash);
     $(input).keyup(function(event) {
+
         if (event.keyCode == 13) {
             toHistoryBash(input.value);
-            client.sender(toJson(input.value));
-            $(input).off('keyup');
+            console.log(input.value);
+            client.sender(toJsonShell(input.value));
+            $(input).off("keyup");
             input.disabled = true;
             id++;
         }
@@ -61,49 +129,23 @@ function keyEvent(input) {
     })
 }
 
-function onStatus(status) {
-    let line;
-    $("#div-host>div").remove();
+function onConnection(status) {
     if (status == "error") {
-        line = "<div><span>Can not connect to " + client.ipHost + "</span></div>";
+        console.log("Can not connect to " + client.ipHost);
+        alert("Can not connect to " + client.ipHost);
     }
     
-    if (status == "online") {
-        line = "<div><span>Connected to " + client.ipHost + "</span></div>";
+    if (status == "connect") {
+        console.log("Connected to " + client.ipHost);
+        itemsCreater();
     }
-    $("#div-host").append(line);
 }
 
-function addLine() {
-    let line = "<div id = \"div-shell-line\" class = \"div-shell-line-class\"><div id = \"div-line-hostname\"><span class = \"span-host\">root@" + client.ipHost + ":$</span></div><div id = \"div-line-bash\"><input id = \"" + id + "-input\"></input></div></div>";
-    console.log("addLine");
-    $("#div-shell").append(line);
-    let input = document.getElementById(id + "-input");
-    input.focus();
-    toSend();
-}
-
-function addResultLine(data) {
-    let line = "<div id = \"div-shell-line\" class = \"div-shell-line-class\"><span class = \"span-result\">" + data + "</span></div>";
-    $("#div-shell").append(line);
-}
-
-function toJson(data) {
-    let jsonData = {
-        host_tk: client.getHost,
-        method: "bash",
-        bash: data
-    };
-    return JSON.stringify(jsonData);
-}
-
-function fromJson(data) {
-    let jsonData = JSON.parse(data);
-    if (jsonData.method != "bash") {
-        return;
+function onServer(ip) {
+    if (ip.indexOf("172.16.") > -1) {
+        return false;
     }
-    addResultLine(jsonData.result);
-    addLine();
+    return true;
 }
 
 function toHistoryBash(bash) {

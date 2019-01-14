@@ -2,7 +2,7 @@ class ClientWS {
     constructor(ip) {
         this.ip = ip;
         console.log(this.ip);
-        this.socket = new WebSocket("ws://" + this.ip + ":8080");
+        this.socket = new WebSocket("ws://" + this.ip + ":44443");
         this.socketWorker();
     }
 
@@ -10,10 +10,8 @@ class ClientWS {
         let ip = this.ip;
         console.log(this.ip);
         this.socket.onopen = function() {
-            onStatus("connect");
+            onConnection("connect");
             console.log("Connection to " + ip + " succesed.");
-            addLine();
-            $("#div-host").remove();
         };
         
         this.socket.onclose = function(event) {
@@ -32,7 +30,7 @@ class ClientWS {
         };
         
         this.socket.onerror = function(error) {
-            onStatus("error");
+            onConnection("error");
             console.log("Error: " + error.message);
         };
     }
@@ -43,5 +41,9 @@ class ClientWS {
 
     get ipHost() {
         return this.ip;
+    }
+
+    get ws() {
+        return this.socket;
     }
 }
